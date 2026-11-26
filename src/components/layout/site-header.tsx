@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { LogOut, Menu, User, X } from 'lucide-react'
 import { useAuthStore } from '@/features/auth/auth-store'
+import { CloudStatus } from '@/features/cloud/cloud-status'
 
 export interface HeaderLink {
   name: string
@@ -18,8 +19,8 @@ export function SiteHeader({ links }: SiteHeaderProps) {
   const signOut = useAuthStore((state) => state.signOut)
   const navigate = useNavigate()
 
-  const handleSignOut = () => {
-    signOut()
+  const handleSignOut = async () => {
+    await signOut()
     navigate('/')
   }
 
@@ -60,10 +61,11 @@ export function SiteHeader({ links }: SiteHeaderProps) {
               {link.name}
             </Link>
           ))}
+          {user && <CloudStatus compact />}
           {user && (
             <button
               type="button"
-              onClick={handleSignOut}
+              onClick={() => void handleSignOut()}
               className="my-4 flex w-full cursor-pointer items-center space-x-3 rounded-lg text-red-500"
             >
               <LogOut className="text-xl" />

@@ -16,10 +16,7 @@ export function SignInPage() {
 
   const handleSignIn = () => {
     setSigningIn(true)
-    window.setTimeout(() => {
-      signIn()
-      navigate('/dashboard')
-    }, 500)
+    signIn()
   }
 
   return (
@@ -50,7 +47,7 @@ export function SignInPage() {
             )}
           </button>
           <p className="mt-4 text-center text-xs text-gray-400">
-            Demo authentication · No real Google account is used
+            You will be redirected to Google to authorize Drive access.
           </p>
         </div>
       </main>

@@ -1,30 +1,65 @@
 import { create } from 'zustand'
-import { createJSONStorage, persist } from 'zustand/middleware'
+import { apiGet, apiPost, ApiError } from '@/lib/api'
 import type { User } from '@/features/gpa/types'
 
-export const DEMO_USER: User = {
-  name: 'Demo Student',
-  email: 'demo@student.com',
+interface SessionResponse {
+  user: User
+  drive: { connected: boolean }
 }
 
 interface AuthState {
   user: User | null
-  signIn: (user?: User) => void
-  signOut: () => void
-  setUser: (user: User | null) => void
+  initialized: boolean
+  initializing: boolean
+  error: string | null
+  initialize: () => Promise<void>
+  signIn: () => void
+  signOut: () => Promise<void>
 }
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
-      user: null,
-      signIn: (user = DEMO_USER) => set({ user }),
-      signOut: () => set({ user: null }),
-      setUser: (user) => set({ user }),
-    }),
-    {
-      name: 'gpa-auth',
-      storage: createJSONStorage(() => localStorage),
-    },
-  ),
-)
+let initializationPromise: Promise<void> | null = null
+
+export const useAuthStore = create<AuthState>((set, get) => ({
+  user: null,
+  initialized: false,
+  initializing: false,
+  error: null,
+
+  initialize: () => {
+    if (get().initialized) return Promise.resolve()
+    if (initializationPromise) return initializationPromise
+
+    initializationPromise = (async () => {
+      set({ initializing: true, error: null })
+      try {
+        const response = await apiGet<SessionResponse>('/api/auth/session')
+        set({ user: response.user })
+      } catch (error) {
+        set({
+          user: null,
+          error:
+            error instanceof ApiError && error.status === 401
+              ? null
+              : 'Could not load your session',
+        })
+      } finally {
+        set({ initialized: true, initializing: false })
+        initializationPromise = null
+      }
+    })()
+
+    return initializationPromise
+  },
+
+  signIn: () => {
+    window.location.assign('/api/auth/google')
+  },
+
+  signOut: async () => {
+    try {
+      await apiPost('/api/auth/logout')
+    } finally {
+      set({ user: null })
+    }
+  },
+}))

@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { useAuthStore } from '@/features/auth/auth-store'
+import { CloudSync } from '@/features/cloud/cloud-sync'
 import { SiteHeader } from './site-header'
 import { Sidebar } from './sidebar'
 
@@ -20,6 +21,7 @@ export function AppLayout() {
 
   return (
     <div>
+      <CloudSync />
       <div className="md:hidden">
         <SiteHeader links={mobileLinks} />
       </div>

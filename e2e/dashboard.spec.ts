@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { buildSemester, seedApp } from './helpers'
+import { buildSemester, seedApp, waitForCloudSave } from './helpers'
 
 test('banner dismissal persists and a default semester can be added', async ({ page }) => {
   await seedApp(page, { hasSeenNotification: false })
@@ -7,8 +7,10 @@ test('banner dismissal persists and a default semester can be added', async ({ p
 
   const banner = page.getByText('Multiple GPA Calculation Methods Now Available!')
   await expect(banner).toBeVisible()
+  const saved = waitForCloudSave(page)
   await page.getByRole('button', { name: 'Got it' }).click()
   await expect(banner).toBeHidden()
+  await saved
 
   await page.reload()
   await page.waitForLoadState('networkidle')

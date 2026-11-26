@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { buildSemester, seedApp } from './helpers'
+import { buildSemester, seedApp, waitForCloudSave } from './helpers'
 
 test('grade points and semester weights save and persist', async ({ page }) => {
   await seedApp(page, { semesters: [buildSemester(0)] })
@@ -14,8 +14,10 @@ test('grade points and semester weights save and persist', async ({ page }) => {
 
   await page.locator('#Aplus').fill('3.9')
   await page.locator('#weight-sem-1').fill('0.2')
+  const saved = waitForCloudSave(page)
   await page.getByRole('button', { name: 'Save Changes' }).click()
   await expect(page.getByText('Grade scale updated successfully')).toBeVisible()
+  await saved
 
   await page.reload()
   await expect(page.locator('#Aplus')).toHaveValue('3.9')

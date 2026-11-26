@@ -1,23 +1,46 @@
-import type { Page } from '@playwright/test'
+import type { Page, Route } from '@playwright/test'
 import { DEFAULT_GRADE_LIST } from '../src/features/gpa/grade-scale'
 import { DEFAULT_SEMESTERS } from '../src/features/gpa/default-data'
-import type { GpaMethod, Module, Semester } from '../src/features/gpa/types'
+import type {
+  CloudData,
+  GpaMethod,
+  Module,
+  Semester,
+} from '../src/features/gpa/types'
 
-export const DEMO_AUTH = {
-  state: {
-    user: {
-      name: 'Demo Student',
-      email: 'demo@student.com',
-    },
-  },
-  version: 0,
+export const DEMO_USER = {
+  name: 'Demo Student',
+  email: 'demo@student.com',
+  picture: null,
 }
+
+const FOLDER_ID = 'folder-1'
+const SPREADSHEET_ID = 'sheet-1'
+const SPREADSHEET_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/edit`
 
 interface SeedOptions {
   auth?: boolean
   semesters?: Semester[]
   gpaMethod?: GpaMethod
   hasSeenNotification?: boolean
+}
+
+function json(route: Route, status: number, body: unknown) {
+  return route.fulfill({
+    status,
+    contentType: 'application/json',
+    body: JSON.stringify(body),
+  })
+}
+
+function readBody(route: Route): { data?: CloudData } {
+  const raw = route.request().postData()
+  if (!raw) return {}
+  try {
+    return JSON.parse(raw) as { data?: CloudData }
+  } catch {
+    return {}
+  }
 }
 
 export async function seedApp(page: Page, options: SeedOptions = {}) {
@@ -28,30 +51,59 @@ export async function seedApp(page: Page, options: SeedOptions = {}) {
     hasSeenNotification = true,
   } = options
 
-  const data = {
-    state: {
-      semesters,
-      gradeList: DEFAULT_GRADE_LIST,
-      gpaMethod,
-      hasSeenGpaMethodNotification: hasSeenNotification,
-      feedback: [],
-    },
-    version: 0,
+  let authenticated = auth
+  let cloudData: CloudData = {
+    semesters,
+    gradeList: DEFAULT_GRADE_LIST.map((grade) => ({ ...grade })),
+    gpaMethod,
+    hasSeenGpaMethodNotification: hasSeenNotification,
+    feedback: [],
   }
 
-  await page.addInitScript(
-    ({ isAuthenticated, authData, gpaData }) => {
-      if (window.localStorage.getItem('__e2e_seeded')) return
-      window.localStorage.setItem('__e2e_seeded', '1')
-      window.localStorage.setItem('gpa-data', JSON.stringify(gpaData))
-      if (isAuthenticated) {
-        window.localStorage.setItem('gpa-auth', JSON.stringify(authData))
-      } else {
-        window.localStorage.removeItem('gpa-auth')
-      }
-    },
-    { isAuthenticated: auth, authData: DEMO_AUTH, gpaData: data },
-  )
+  const driveInfo = {
+    folderId: FOLDER_ID,
+    spreadsheetId: SPREADSHEET_ID,
+    spreadsheetUrl: SPREADSHEET_URL,
+  }
+
+  await page.route('**/api/auth/session', (route) => {
+    if (!authenticated) {
+      return json(route, 401, { error: 'Unauthorized', code: 'unauthenticated' })
+    }
+    return json(route, 200, { user: DEMO_USER, drive: { connected: true } })
+  })
+
+  await page.route('**/api/auth/google', (route) => {
+    authenticated = true
+    return route.fulfill({
+      status: 302,
+      headers: { location: '/dashboard' },
+      body: '',
+    })
+  })
+
+  await page.route('**/api/auth/logout', (route) => {
+    authenticated = false
+    return json(route, 200, { ok: true })
+  })
+
+  await page.route('**/api/sheets/sync', (route) => {
+    if (!authenticated) {
+      return json(route, 401, { error: 'Unauthorized', code: 'unauthenticated' })
+    }
+    if (route.request().method() === 'POST') {
+      const body = readBody(route)
+      if (body.data) cloudData = body.data
+      return json(route, 200, { ok: true, ...driveInfo })
+    }
+    return json(route, 200, { data: cloudData, ...driveInfo })
+  })
+
+  await page.addInitScript((data) => {
+    if (window.localStorage.getItem('__e2e_seeded')) return
+    window.localStorage.setItem('__e2e_seeded', '1')
+    window.localStorage.setItem('gpa-data', JSON.stringify({ state: data, version: 0 }))
+  }, cloudData)
 }
 
 export function buildSemester(index = 0): Semester {
@@ -79,4 +131,12 @@ export function buildSemesterWithGrades(
     totalCredits: 0,
     ...overrides,
   }
+}
+
+export function waitForCloudSave(page: Page) {
+  return page.waitForResponse(
+    (response) =>
+      response.url().includes('/api/sheets/sync') &&
+      response.request().method() === 'POST',
+  )
 }

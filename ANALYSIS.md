@@ -2,107 +2,121 @@
 
 ## Reference
 
-- Target: `https://gpa.sarislabs.com/dashboard`
-- Captured material lives in `_analysis/`:
-  - `chunks/`: extracted reference JavaScript for behavior and markup details
-  - `captures/`: screenshots, HTML snapshots, and `help-info.json`
-- The rebuild focuses on visual fidelity first, then behavior and persistence.
+- Original target: `https://gpa.sarislabs.com/dashboard`
+- Reference extraction artifacts remain in `_analysis/`.
+- The UI was rebuilt for visual fidelity first, then extended from LocalStorage
+  into a Google-backed application.
 
-## Application Structure
+## Current Architecture
 
-The original is a Next.js app with a Google OAuth gate. This rebuild uses Vite,
-React Router, and a mocked auth store. The dashboard shell consists of:
+One Vercel project serves both parts:
 
-- Fixed primary sidebar on desktop, off-canvas drawer on mobile
-- Header with GPA Calculator branding, account block, and logout
-- Main content area with the reference primary/secondary colors
-- Route pages for dashboard, analytics, settings, help, and feedback
+```text
+/          Vite React app
+/api/*     Vercel serverless functions
+```
 
-Feature code is separated from GPA domain logic:
+Using one domain avoids CORS configuration and cross-site cookie problems.
 
-- `src/features/gpa`: pure calculations, types, default data, Zustand store
-- `src/features/*`: page and feature components
-- `src/components/ui` and `shared`: reusable UI primitives
+Frontend:
 
-## Visual Fidelity
+- Zustand holds in-memory GPA/auth state.
+- LocalStorage is retained as a cache and migration source.
+- `src/features/cloud/cloud-sync.tsx` performs cloud hydration and writes.
+- Cloud status is shown in the sidebar and mobile navigation.
 
-Key reference details preserved:
+Backend:
 
-- Primary color `#2b2b41`; secondary color `#193636`
-- Geist variable font loaded from `public/fonts/geist-latin.woff2`
-- Sidebar/header spacing, account block, and menu treatment
-- Dashboard GPA/credit headings and method badge
-- Blue new-feature banner with Sparkles icon and dismiss controls
-- Semester cards with module tables, grade selectors, save/cancel/delete
-  controls, SGPA, and total credits
-- Analytics page title/subtitle: “Analytics & Progress” and “Track your academic
-  performance and plan ahead”
-- Target GPA calculator result states and exact result copy
-- What-if simulator table, add/remove behavior, projected GPA, change, and total
-  credits
-- Settings grade-scale and semester-weight forms
-- Help page rendered from captured reference HTML
-- Responsive mobile navigation
+- `api/auth/*` implements Google OAuth with PKCE and offline access.
+- `api/drive/bootstrap.ts` finds or creates the Drive folder and spreadsheet.
+- `api/sheets/sync.ts` maps application state to structured sheet tabs.
+- Tokens are encrypted with AES-256-GCM using `SESSION_SECRET`.
+- Sessions and cloud file IDs are stored in Postgres.
 
-Screenshots from the reference and rebuild were compared during implementation.
+## OAuth Flow
 
-## GPA Behavior
+1. `GET /api/auth/google` creates `state` and a PKCE verifier, stores them in an
+   encrypted temporary cookie, and redirects to Google.
+2. Google redirects to `GET /api/auth/callback`.
+3. The callback validates state, exchanges the code for tokens, reads the user
+   profile, creates a database session, sets an `httpOnly` cookie, and redirects
+   to `/dashboard`.
+4. `GET /api/auth/session` hydrates the frontend auth store.
+5. Access tokens are refreshed server-side using the stored refresh token.
 
-- SGPA uses only modules with a positive credit value and a non-NGPA grade.
-- Total credits include NGPA modules.
-- Weighted SGPA uses semester weights.
-- Weighted Module CGPA uses weight × credit × grade point.
-- Both overall methods exclude NGPA modules.
-- Values are rounded to four decimal places with `parseFloat(x.toFixed(4))`.
+Scopes requested:
 
-The reference default grade scale is represented in
-`src/features/gpa/grade-scale.ts`.
+- `openid`
+- `email`
+- `profile`
+- `https://www.googleapis.com/auth/drive.file`
+- `https://www.googleapis.com/auth/spreadsheets`
 
-## Persistence
+## Google Drive and Sheets Layout
 
-The Zustand store persists to `gpa-data`. It includes:
+The backend finds or creates:
 
-- `semesters`
-- `gradeList`
-- `gpaMethod`
-- `hasSeenGpaMethodNotification`
-- `feedback`
+```text
+MyGPA/
+  GPA Data
+```
 
-The auth store persists to `gpa-auth`. The mocked user is `Demo Student` /
-`demo@student.com`.
+Spreadsheet tabs and columns:
 
-Semester weights are edited in local settings state and only committed to the
-store when **Save Changes** is clicked, matching the reference interaction.
+- `Semesters`: id, name, weight, sgpa, totalCredits, position
+- `Modules`: semesterId, id, moduleName, grade, credit, position
+- `GradeScale`: grade, point, position
+- `Settings`: key, value
+- `Feedback`: id, description, createdAt
 
-## Preserved Quirk
+`Settings` stores `gpaMethod`, `hasSeenGpaMethodNotification`, `updatedAt`, and
+`schemaVersion`.
 
-Preset modules use lowercase `"c"`. The grade `<select>` uses uppercase options,
-so the value appears blank while calculations treat it as C/2.0. This was kept
-because the reference does the same.
+## Sync Strategy
+
+- On initial load, the client fetches `/api/sheets/sync`.
+- If the cloud is empty and LocalStorage has data, local data is migrated up.
+- Otherwise cloud data replaces the local store.
+- Subsequent state changes are debounced and posted to the same endpoint.
+- A `pagehide` listener sends a final `sendBeacon` request.
+- The route is protected by the session cookie; tokens never reach the browser.
+
+## Visual Fidelity Details Preserved
+
+- Primary `#2b2b41`, secondary `#193636`, Geist font, sidebar/header layout.
+- Dashboard GPA/credit headings and method badge.
+- New-feature banner and semester/module CRUD.
+- Analytics title “Analytics & Progress”, charts, target calculator, and what-if
+  simulator.
+- Settings, help, feedback, and responsive navigation.
+
+## Preserved Reference Quirk
+
+Preset modules use lowercase `"c"`, so the uppercase grade selector appears
+blank while calculations still treat it as C/2.0.
 
 ## Deliberate Deviations
 
-- Mocked demo sign-in replaces Google OAuth.
-- Adding a module writes to the store immediately; the reference requires a
-  separate persistence action.
-- Preset module IDs are regenerated when added to prevent duplicate keys.
-- Local shadcn/ui-style primitives are used instead of a generated
-  `components.json` workflow.
-- The analytics route is lazy-loaded to split Recharts out of the main bundle.
+- Mock auth was replaced with real Google OAuth.
+- LocalStorage is no longer the source of truth, only a cache/migration source.
+- Google Drive/Sheets is the user-facing data store.
+- A small Postgres-compatible database stores encrypted session/token records.
+- Adding a module still persists immediately.
+- Preset module IDs are regenerated when added.
 
 ## Verification
 
-- `npm run typecheck`: passes.
+- `npm run typecheck`: passes for app, config, and API.
 - `npm run build`: passes.
 - `npm run lint`: passes.
 - `npm test`: 24 unit tests pass.
-- `npm run test:e2e`: 10 Playwright tests pass locally with two workers.
+- `npm run test:e2e`: 10 Playwright tests pass with mocked API routes.
 
 ## Remaining Risks
 
-- `npm audit` reports three dependency vulnerabilities that have not been
-  triaged.
-- The analytics bundle is large because of Recharts; the route is lazy-loaded,
-  but Vite may still report a large vendor chunk.
-- E2E tests depend on locally installed Google Chrome through the Playwright
-  `channel: 'chrome'` setting.
+- Real Google OAuth and Drive/Sheets calls require configured credentials and a
+  database; they are not exercised by the automated test suite.
+- Google Sheets does not provide transactional multi-device writes.
+- OAuth verification may be required for external users.
+- Google API quotas and Sheet size limits apply.
+- `npm audit` currently reports vulnerabilities in the dependency tree.

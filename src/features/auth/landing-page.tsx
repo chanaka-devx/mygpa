@@ -19,10 +19,7 @@ export function LandingPage() {
 
   const handleSignIn = () => {
     setSigningIn(true)
-    window.setTimeout(() => {
-      signIn()
-      navigate('/dashboard')
-    }, 600)
+    signIn()
   }
 
   if (user) {
@@ -77,7 +74,7 @@ export function LandingPage() {
               )}
             </button>
             <p className="mt-4 text-center text-xs text-gray-400">
-              Free forever · No credit card required
+              You will be redirected to Google to authorize Drive access.
             </p>
           </div>
         </div>

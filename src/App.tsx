@@ -1,7 +1,8 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AppLayout } from '@/components/layout/app-layout'
 import { Loader } from '@/components/shared/loader'
+import { useAuthStore } from '@/features/auth/auth-store'
 import { LandingPage } from '@/features/auth/landing-page'
 import { SignInPage } from '@/features/auth/sign-in-page'
 import { DashboardPage } from '@/features/dashboard/dashboard-page'
@@ -16,6 +17,17 @@ const AnalyticsPage = lazy(() =>
 )
 
 export function App() {
+  const initialized = useAuthStore((state) => state.initialized)
+  const initialize = useAuthStore((state) => state.initialize)
+
+  useEffect(() => {
+    void initialize()
+  }, [initialize])
+
+  if (!initialized) {
+    return <Loader />
+  }
+
   return (
     <BrowserRouter>
       <Routes>

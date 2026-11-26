@@ -9,6 +9,7 @@ import {
   User,
 } from 'lucide-react'
 import { useAuthStore } from '@/features/auth/auth-store'
+import { CloudStatus } from '@/features/cloud/cloud-status'
 
 const navItems = [
   { name: 'Home', href: '/dashboard', icon: Home },
@@ -24,8 +25,8 @@ export function Sidebar() {
   const user = useAuthStore((state) => state.user)
   const signOut = useAuthStore((state) => state.signOut)
 
-  const handleSignOut = () => {
-    signOut()
+  const handleSignOut = async () => {
+    await signOut()
     navigate('/')
   }
 
@@ -52,6 +53,8 @@ export function Sidebar() {
             </div>
           </div>
         </div>
+
+        <CloudStatus />
 
         <div className="mx-5 mb-2">
           <div className="h-px bg-white/10" />
@@ -98,7 +101,7 @@ export function Sidebar() {
         <div className="mx-2 mb-3 h-px bg-white/10" />
         <button
           type="button"
-          onClick={handleSignOut}
+          onClick={() => void handleSignOut()}
           className="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-white/70 transition-all duration-200 hover:bg-red-500/20 hover:text-red-300"
         >
           <LogOut className="h-5 w-5 flex-shrink-0" />

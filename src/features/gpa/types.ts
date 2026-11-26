@@ -29,6 +29,23 @@ export type GpaMethod = 'weighted-sgpa' | 'credit-weighted'
 export interface User {
   name: string
   email: string
+  picture?: string | null
+}
+
+export interface CloudData {
+  semesters: Semester[]
+  gradeList: GradePoint[]
+  gpaMethod: GpaMethod
+  hasSeenGpaMethodNotification: boolean
+  feedback: FeedbackEntry[]
+}
+
+export interface SyncResponse {
+  data: CloudData
+  folderId: string
+  spreadsheetId: string
+  spreadsheetUrl: string
+  updatedAt?: string
 }
 
 export interface FeedbackEntry {
