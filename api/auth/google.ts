@@ -1,9 +1,9 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { CodeChallengeMethod } from 'google-auth-library'
-import { randomToken, sha256Base64Url } from '../_lib/crypto'
-import { createOAuthClient, GOOGLE_SCOPES, getGoogleRedirectUri } from '../_lib/google'
-import { handleApiError, methodNotAllowed } from '../_lib/http'
-import { setOAuthCookie } from '../_lib/session'
+import { randomToken, sha256Base64Url } from '../_lib/crypto.js'
+import { createOAuthClient, GOOGLE_SCOPES, getGoogleRedirectUri } from '../_lib/google.js'
+import { handleApiError, methodNotAllowed } from '../_lib/http.js'
+import { setOAuthCookie } from '../_lib/session.js'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {

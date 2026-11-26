@@ -1,14 +1,14 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { encrypt, randomToken } from '../_lib/crypto'
-import { createSession } from '../_lib/db'
-import { getSessionSecret } from '../_lib/env'
-import { exchangeGoogleCode, getGoogleUser } from '../_lib/google'
-import { ApiError, methodNotAllowed } from '../_lib/http'
+import { encrypt, randomToken } from '../_lib/crypto.js'
+import { createSession } from '../_lib/db.js'
+import { getSessionSecret } from '../_lib/env.js'
+import { exchangeGoogleCode, getGoogleUser } from '../_lib/google.js'
+import { ApiError, methodNotAllowed } from '../_lib/http.js'
 import {
   clearOAuthCookie,
   readOAuthCookie,
   setSessionCookie,
-} from '../_lib/session'
+} from '../_lib/session.js'
 
 function queryValue(value: string | string[] | undefined): string | null {
   if (Array.isArray(value)) return value[0] ?? null

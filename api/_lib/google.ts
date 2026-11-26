@@ -1,7 +1,7 @@
 ﻿import { google, type sheets_v4 } from 'googleapis'
 import type { VercelRequest } from '@vercel/node'
-import { getGoogleClientId, getGoogleClientSecret } from './env'
-import { ApiError, getBaseUrl } from './http'
+import { getGoogleClientId, getGoogleClientSecret } from './env.js'
+import { ApiError, getBaseUrl } from './http.js'
 import type {
   CloudData,
   DriveFilesResult,
@@ -12,7 +12,7 @@ import type {
   Module,
   Semester,
   SessionRecord,
-} from './types'
+} from './types.js'
 
 export const GOOGLE_SCOPES = [
   'openid',

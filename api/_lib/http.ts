@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { getConfiguredAppUrl } from './env'
+import { getConfiguredAppUrl } from './env.js'
 
 export class ApiError extends Error {
   status: number

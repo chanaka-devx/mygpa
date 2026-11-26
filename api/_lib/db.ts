@@ -1,6 +1,6 @@
 import { Pool } from 'pg'
-import { getDatabaseUrl } from './env'
-import type { SessionRecord } from './types'
+import { getDatabaseUrl } from './env.js'
+import type { SessionRecord } from './types.js'
 
 let pool: Pool | null = null
 let schemaPromise: Promise<void> | null = null

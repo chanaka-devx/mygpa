@@ -1,16 +1,16 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { z } from 'zod'
-import { updateSessionDrive } from '../_lib/db'
-import { ensureDriveFiles, readCloudData, writeCloudData } from '../_lib/google'
+import { updateSessionDrive } from '../_lib/db.js'
+import { ensureDriveFiles, readCloudData, writeCloudData } from '../_lib/google.js'
 import {
   ApiError,
   getJsonBody,
   handleApiError,
   methodNotAllowed,
   sendJson,
-} from '../_lib/http'
-import { getValidAccessToken, requireSession } from '../_lib/session'
-import type { CloudData } from '../_lib/types'
+} from '../_lib/http.js'
+import { getValidAccessToken, requireSession } from '../_lib/session.js'
+import type { CloudData } from '../_lib/types.js'
 
 const moduleSchema = z.object({
   id: z.string().min(1),

@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { updateSessionDrive } from '../_lib/db'
-import { ensureDriveFiles } from '../_lib/google'
-import { handleApiError, methodNotAllowed, sendJson } from '../_lib/http'
-import { getValidAccessToken, requireSession } from '../_lib/session'
+import { updateSessionDrive } from '../_lib/db.js'
+import { ensureDriveFiles } from '../_lib/google.js'
+import { handleApiError, methodNotAllowed, sendJson } from '../_lib/http.js'
+import { getValidAccessToken, requireSession } from '../_lib/session.js'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
