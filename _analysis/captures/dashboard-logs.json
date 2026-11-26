@@ -1,0 +1,54 @@
+[
+  {
+    "req": "GET https://gpa.sarislabs.com/dashboard"
+  },
+  {
+    "req": "GET https://www.googletagmanager.com/gtag/js?id=G-Y7MZLKMTYY"
+  },
+  {
+    "type": "error",
+    "text": "Loading the script 'https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092' violates the following Content Security Policy directive: \"script-src 'self' 'unsafe-eval' 'unsafe-inline' *.googletagmanager.com *.google-analytics.com\". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked."
+  },
+  {
+    "req": "GET https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092"
+  },
+  {
+    "req": "GET https://gpa.sarislabs.com/site.webmanifest"
+  },
+  {
+    "req": "POST https://www.google-analytics.com/g/collect?v=2&tid=G-Y7MZLKMTYY&gtm=45je6bh1v9238117479za208zd9238117479xf1&_p=1795616799307&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AAAAAAQ&cid=28124725.1795616750&frm=0&ngs=1&pscdl=noapi&rcb=6&sr=1440x900&uaa=x86&uab=64&uafvl=Not-A.Brand%3B99.0.0.0%7CGoogle%2520Chrome%3B157.0.8103.79%7CChromium%3B157.0.8103.79&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=en-us&_s=1&tag_exp=115938465~115938468~120213116~120385423~120469145~120469153~121246026~121246034&sid=1795616749&sct=1&seg=1&dl=https%3A%2F%2Fgpa.sarislabs.com%2Fdashboard&dr=https%3A%2F%2Faccounts.google.com%2F&dt=GPA%20Calc%20-%20Free%20Online%20GPA%20Calculator%20%7C%20Calculate%20Your%20Grade%20Point%20Average&en=page_view&_ee=1&tfd=1682"
+  },
+  {
+    "req": "GET https://gpa.sarislabs.com/api/auth/session"
+  },
+  {
+    "req": "GET https://gpa.sarislabs.com/dashboard/analytics?_rsc=skepm"
+  },
+  {
+    "req": "GET https://gpa.sarislabs.com/dashboard/settings?_rsc=skepm"
+  },
+  {
+    "req": "GET https://gpa.sarislabs.com/dashboard/help?_rsc=skepm"
+  },
+  {
+    "req": "GET https://gpa.sarislabs.com/dashboard/feedback?_rsc=skepm"
+  },
+  {
+    "req": "GET https://gpa.sarislabs.com/api/user?email=madhurangachanaka2@gmail.com"
+  },
+  {
+    "type": "warning",
+    "text": "The resource https://gpa.sarislabs.com/_next/static/css/715be398208dca58.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+  },
+  {
+    "req": "POST https://www.google-analytics.com/g/collect?v=2&tid=G-Y7MZLKMTYY&gtm=45je6bh1v9238117479za200zd9238117479xf1&_p=1795616799307&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AEAAAAQ&ae=a&cid=28124725.1795616750&frm=0&ngs=1&pscdl=noapi&rcb=6&sr=1440x900&uaa=x86&uab=64&uafvl=Not-A.Brand%3B99.0.0.0%7CGoogle%2520Chrome%3B157.0.8103.79%7CChromium%3B157.0.8103.79&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=en-us&_s=2&tag_exp=115938465~115938468~120213116~120385423~120469145~120469153~121246026~121246034&sid=1795616749&sct=1&seg=1&dl=https%3A%2F%2Fgpa.sarislabs.com%2Fdashboard&dr=https%3A%2F%2Faccounts.google.com%2F&dt=GPA%20Calc%20-%20Free%20Online%20GPA%20Calculator%20%7C%20Calculate%20Your%20Grade%20Point%20Average&en=scroll&epn.percent_scrolled=90&_et=14&tfd=6692"
+  },
+  {
+    "type": "error",
+    "text": "Failed to load resource: the server responded with a status of 404 ()"
+  },
+  {
+    "type": "warning",
+    "text": "The resource https://gpa.sarislabs.com/_next/static/css/715be398208dca58.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+  }
+]

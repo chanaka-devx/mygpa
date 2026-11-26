@@ -1,0 +1,52 @@
+{
+  "title": "GPA Calc - Free Online GPA Calculator | Calculate Your Grade Point Average",
+  "text": "GPA Calculator\n\nACADEMIC TRACKER\n\nChanaka Malawige\n\nmadhurangachanaka2@gmail.com\n\nMENU\n\nHome\nAnalytics\nSettings\nHelp\nFeedback\nLog out\nFeedback\nDescription\nSubmit Feedback",
+  "html": "<div class=\"md:ml-64 p-4 w-full\"><div class=\"max-w-2xl mx-auto p-6\"><h1 class=\"text-2xl font-bold mb-6\">Feedback</h1><form class=\"space-y-4\"><div><label for=\"description\" class=\"block text-sm font-medium mb-2\">Description</label><textarea id=\"description\" name=\"description\" rows=\"6\" placeholder=\"Please share your feedback, suggestions, or report any issues...\" class=\"mt-1 block w-full border \n             \n             rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-3\"></textarea></div><div class=\"flex justify-end\"><button type=\"submit\" class=\"bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-colors\">Submit Feedback</button></div></form></div><!--$--><!--/$--></div>",
+  "links": [
+    {
+      "t": "Home",
+      "h": "/dashboard"
+    },
+    {
+      "t": "Analytics",
+      "h": "/dashboard/analytics"
+    },
+    {
+      "t": "Settings",
+      "h": "/dashboard/settings"
+    },
+    {
+      "t": "Help",
+      "h": "/dashboard/help"
+    },
+    {
+      "t": "Feedback",
+      "h": "/dashboard/feedback"
+    }
+  ],
+  "buttons": [
+    {
+      "t": "",
+      "cls": "md:hidden text-gray-900 focus:outline-none"
+    },
+    {
+      "t": "Log out",
+      "cls": "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-white/70 hover:bg-red-500/20 hover:text-red-300 transition-all duration-200 cursor-pointer"
+    },
+    {
+      "t": "Submit Feedback",
+      "cls": "bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-colors"
+    }
+  ],
+  "inputs": [
+    {
+      "tag": "TEXTAREA",
+      "type": "textarea",
+      "id": "description",
+      "name": "description",
+      "value": "",
+      "placeholder": "Please share your feedback, suggestions, or report any issues...",
+      "cls": "mt-1 block w-full border \n             \n             rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-3"
+    }
+  ]
+}

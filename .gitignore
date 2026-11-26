@@ -1,0 +1,10 @@
+node_modules
+dist
+dist-ssr
+*.local
+coverage
+playwright-report
+test-results
+_analysis/chrome-profile
+_analysis/node_modules
+.DS_Store

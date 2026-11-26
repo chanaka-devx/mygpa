@@ -1,0 +1,75 @@
+{
+  "text": "New semester added successfully\nGPA Calculator\n\nACADEMIC TRACKER\n\nChanaka Malawige\n\nmadhurangachanaka2@gmail.com\n\nMENU\n\nHome\nAnalytics\nSettings\nHelp\nFeedback\nLog out\nNEW FEATURE\nMultiple GPA Calculation Methods Now Available!\n\nYou can now choose how your overall GPA is calculated: using Weighted SGPA [Σ(SGPA × w) / Σw] or Weighted Module CGPA [Σ(w × C × GPV) / Σ(w × C)]. Non-GPA (NGPA) modules are excluded from all GPA calculations. Switch methods anytime using the selector in the top-right.\n\nGot it\nCurrent GPA :\n0.0000\nWeighted SGPA\nTotal Credits :\n0\nGPA CALCULATION METHOD\nWeighted SGPA [ Σ(SGPA × w) / Σw ]\nWeighted Module CGPA [ Σ(w × C × GPV) / Σ(w × C) ]\nOverall GPA: Weighted average of semester SGPAs (NGPA excluded)\nSemester 1\nModule Name\tCredit\tGrade\t\nAdd New Module\nTotal Credits for Semester 1 :\n0\nSGPA :\n0\nAdd New Semester\nChoose Default Semester",
+  "cards": [
+    {
+      "cls": "mx-3 mb-4 p-3 rounded-xl bg-white/[0.07] backdrop-blur-sm",
+      "text": "Chanaka Malawige\n\nmadhurangachanaka2@gmail.com"
+    },
+    {
+      "cls": "\n                  relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm\n                  transition-all duration-200 ease-out group\n                  bg-white text-primary font-semibold sh",
+      "text": "Home"
+    },
+    {
+      "cls": "\n                  relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm\n                  transition-all duration-200 ease-out group\n                  text-white/70 hover:bg-white/[0.08] ho",
+      "text": "Analytics"
+    },
+    {
+      "cls": "\n                  relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm\n                  transition-all duration-200 ease-out group\n                  text-white/70 hover:bg-white/[0.08] ho",
+      "text": "Settings"
+    },
+    {
+      "cls": "\n                  relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm\n                  transition-all duration-200 ease-out group\n                  text-white/70 hover:bg-white/[0.08] ho",
+      "text": "Help"
+    },
+    {
+      "cls": "\n                  relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm\n                  transition-all duration-200 ease-out group\n                  text-white/70 hover:bg-white/[0.08] ho",
+      "text": "Feedback"
+    },
+    {
+      "cls": "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-white/70 hover:bg-red-500/20 hover:text-red-300 transition-all duration-200 cursor-pointer",
+      "text": "Log out"
+    },
+    {
+      "cls": "w-full bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50 border border-blue-200 rounded-xl p-4 sm:p-5 mb-6 shadow-sm relative transition-all",
+      "text": "NEW FEATURE\nMultiple GPA Calculation Methods Now Available!\n\nYou can now choose how your overall GPA is calculated: using Weighted SGPA [Σ(SGPA × w) / Σw] or Weighted Module CGPA [Σ(w × C × GPV) / Σ(w"
+    },
+    {
+      "cls": "p-2.5 bg-primary/10 text-primary rounded-xl shrink-0 mt-0.5 sm:mt-0",
+      "text": ""
+    },
+    {
+      "cls": "px-4 py-2 bg-primary hover:bg-primary/90 text-white text-xs sm:text-sm font-medium rounded-lg shadow-sm transition-colors cursor-pointer",
+      "text": "Got it"
+    },
+    {
+      "cls": "p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer",
+      "text": ""
+    },
+    {
+      "cls": "w-full sm:w-auto appearance-none bg-white border border-gray-300 hover:border-primary text-gray-800 text-sm font-medium py-2 pl-3 pr-9 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-p",
+      "text": "Weighted SGPA [ Σ(SGPA × w) / Σw ]\nWeighted Module CGPA [ Σ(w × C × GPV) / Σ(w × C) ]"
+    }
+  ],
+  "links": [
+    {
+      "t": "Home",
+      "h": "/dashboard"
+    },
+    {
+      "t": "Analytics",
+      "h": "/dashboard/analytics"
+    },
+    {
+      "t": "Settings",
+      "h": "/dashboard/settings"
+    },
+    {
+      "t": "Help",
+      "h": "/dashboard/help"
+    },
+    {
+      "t": "Feedback",
+      "h": "/dashboard/feedback"
+    }
+  ]
+}
