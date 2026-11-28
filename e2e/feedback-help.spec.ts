@@ -26,7 +26,7 @@ test('help guide renders', async ({ page }) => {
   await page.goto('/dashboard/help')
 
   await expect(
-    page.getByRole('heading', { name: 'GPA Calculator Help Guide' }),
+    page.getByRole('heading', { name: 'MCM GPA Help Guide' }),
   ).toBeVisible()
   await expect(page.getByText('Getting Started')).toBeVisible()
   await expect(page.getByText('Managing Modules/Courses')).toBeVisible()

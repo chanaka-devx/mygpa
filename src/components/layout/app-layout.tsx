@@ -27,7 +27,7 @@ export function AppLayout() {
       </div>
       <div className="flex items-start justify-between">
         <Sidebar />
-        <div className="w-full md:ml-64">
+        <div className="w-full md:ml-72">
           <Outlet />
         </div>
       </div>

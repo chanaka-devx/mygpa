@@ -37,7 +37,7 @@ export function AnalyticsPage() {
         <h1 className="text-2xl font-bold text-primary sm:text-3xl">
           Analytics & Progress
         </h1>
-        <p className="mt-1 text-gray-500">
+        <p className="mt-1 text-on-surface-variant">
           Track your academic performance and plan ahead
         </p>
       </div>

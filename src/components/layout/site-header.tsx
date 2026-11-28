@@ -25,38 +25,42 @@ export function SiteHeader({ links }: SiteHeaderProps) {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white backdrop-blur-sm">
+    <header className="sticky top-0 z-50 border-b border-outline-variant bg-surface/95 backdrop-blur-xl">
       <div className="mx-auto flex items-center justify-between px-6 py-4">
         <div className="flex items-center space-x-3">
-          <img src="/logo.png" alt="Logo" width={40} height={40} />
-          <div className="text-lg font-semibold text-gray-900">GPA Calculator</div>
+          <img src="/mcm-logo.svg" alt="MCM logo" width={40} height={40} />
+          <div className="text-lg font-medium tracking-tight text-on-surface">MCM GPA</div>
         </div>
 
-        <div className="hidden items-center space-x-3 md:flex">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-900">
-            <User size={16} className="text-white" />
-          </div>
-          {user && <h1 className="text-sm font-medium text-gray-900">{user.name}</h1>}
-        </div>
+        {user && (
+          <>
+            <div className="hidden items-center space-x-3 md:flex">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-container text-on-primary-container">
+                <User size={18} />
+              </div>
+              <h1 className="text-sm font-medium text-on-surface">{user.name}</h1>
+            </div>
 
-        <button
-          type="button"
-          className="text-gray-900 focus:outline-none md:hidden"
-          onClick={() => setOpen((value) => !value)}
-          aria-label={open ? 'Close menu' : 'Open menu'}
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
+            <button
+              type="button"
+              className="rounded-full p-2 text-on-surface-variant transition-colors hover:bg-surface-container focus:outline-none md:hidden"
+              onClick={() => setOpen((value) => !value)}
+              aria-label={open ? 'Close menu' : 'Open menu'}
+            >
+              {open ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </>
+        )}
       </div>
 
-      {open && (
-        <nav className="border-t border-gray-200 bg-gray-100 px-6 pb-4 md:hidden">
+      {user && open && (
+        <nav className="border-t border-outline-variant bg-surface px-6 pb-5 md:hidden">
           {links.map((link) => (
             <Link
               key={link.name}
               to={link.href}
               onClick={() => setOpen(false)}
-              className="block py-3 text-gray-700 transition hover:text-gray-900"
+              className="block rounded-2xl px-4 py-3 text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface"
             >
               {link.name}
             </Link>
@@ -66,7 +70,7 @@ export function SiteHeader({ links }: SiteHeaderProps) {
             <button
               type="button"
               onClick={() => void handleSignOut()}
-              className="my-4 flex w-full cursor-pointer items-center space-x-3 rounded-lg text-red-500"
+              className="my-3 flex w-full cursor-pointer items-center space-x-3 rounded-full px-4 py-3 text-error transition-colors hover:bg-surface-container"
             >
               <LogOut className="text-xl" />
               <span className="text-sm font-medium">Sign Out</span>

@@ -16,6 +16,7 @@ import {
   round4,
 } from '@/features/gpa/calculations'
 import type { GradePoint, GpaMethod, SemesterWithStats } from '@/features/gpa/types'
+import { CHART_COLORS } from '../chart-theme'
 
 interface GpaTrendChartProps {
   semesters: SemesterWithStats[]
@@ -58,20 +59,22 @@ export function GpaTrendChart({ semesters, gradeList, gpaMethod }: GpaTrendChart
 
   if (data.length === 0) {
     return (
-      <div className="w-full rounded-2xl border border-gray-100 bg-white p-6 shadow-md">
+      <div className="m3-card w-full p-6">
         <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-primary">
           <TrendingUp className="text-xl" /> GPA Trend
         </h2>
-        <p className="py-10 text-center text-gray-400">Add semesters to see your GPA trend</p>
+        <p className="py-10 text-center text-on-surface-variant">
+          Add semesters to see your GPA trend
+        </p>
       </div>
     )
   }
 
   return (
-    <div className="w-full rounded-2xl border border-gray-100 bg-white p-6 shadow-md">
+    <div className="m3-card w-full p-6">
       <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-primary">
         <TrendingUp className="text-xl" /> GPA Trend
-        <span className="ml-auto text-xs font-normal text-gray-500">
+        <span className="ml-auto text-xs font-normal text-on-surface-variant">
           {gpaMethod === 'credit-weighted'
             ? 'Cumulative: Weighted Module CGPA'
             : 'Cumulative: Weighted SGPA'}
@@ -79,19 +82,24 @@ export function GpaTrendChart({ semesters, gradeList, gpaMethod }: GpaTrendChart
       </h2>
       <ResponsiveContainer width="100%" height={320}>
         <LineChart data={data} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-          <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#6b7280' }} tickLine={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke={CHART_COLORS.grid} />
+          <XAxis
+            dataKey="name"
+            tick={{ fontSize: 12, fill: CHART_COLORS.axis }}
+            tickLine={false}
+          />
           <YAxis
             domain={[0, Math.ceil(maxPoint)]}
-            tick={{ fontSize: 12, fill: '#6b7280' }}
+            tick={{ fontSize: 12, fill: CHART_COLORS.axis }}
             tickLine={false}
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: '#fff',
-              borderRadius: '12px',
-              border: '1px solid #e5e7eb',
-              boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)',
+              backgroundColor: CHART_COLORS.surface,
+              borderRadius: '16px',
+              border: `1px solid ${CHART_COLORS.grid}`,
+              boxShadow: '0 2px 8px rgba(60, 64, 67, 0.12)',
+              color: CHART_COLORS.onSurface,
             }}
             formatter={(value) =>
               typeof value === 'number' ? value.toFixed(4) : String(value ?? '')
@@ -101,17 +109,27 @@ export function GpaTrendChart({ semesters, gradeList, gpaMethod }: GpaTrendChart
           <Line
             type="monotone"
             dataKey="SGPA"
-            stroke="#2cc0fc"
+            stroke={CHART_COLORS.secondary}
             strokeWidth={2.5}
-            dot={{ r: 5, fill: '#2cc0fc', strokeWidth: 2, stroke: '#fff' }}
+            dot={{
+              r: 5,
+              fill: CHART_COLORS.secondary,
+              strokeWidth: 2,
+              stroke: CHART_COLORS.surface,
+            }}
             activeDot={{ r: 7 }}
           />
           <Line
             type="monotone"
             dataKey="Cumulative GPA"
-            stroke="#1f5492"
+            stroke={CHART_COLORS.primary}
             strokeWidth={2.5}
-            dot={{ r: 5, fill: '#1f5492', strokeWidth: 2, stroke: '#fff' }}
+            dot={{
+              r: 5,
+              fill: CHART_COLORS.primary,
+              strokeWidth: 2,
+              stroke: CHART_COLORS.surface,
+            }}
             activeDot={{ r: 7 }}
             strokeDasharray="5 5"
           />

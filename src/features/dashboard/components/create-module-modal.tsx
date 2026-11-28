@@ -53,8 +53,8 @@ export function CreateModuleModal({ open, onClose, onAdd }: CreateModuleModalPro
                 setError('')
               }}
               className={[
-                'w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500',
-                error ? 'border-red-500' : 'border-gray-300',
+                'w-full rounded-t border-0 border-b-2 bg-surface-container px-4 py-3 text-on-surface focus:outline-none focus:ring-0',
+                error ? 'border-error' : 'border-outline',
               ].join(' ')}
             >
               <option value="">Select  Form Default list</option>
@@ -64,11 +64,11 @@ export function CreateModuleModal({ open, onClose, onAdd }: CreateModuleModalPro
                 </option>
               ))}
             </select>
-            {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+            {error && <p className="mt-1 text-sm text-error">{error}</p>}
           </div>
           <Button
             onClick={handleAdd}
-            className="my-0 rounded-md bg-primary p-3 text-sm text-white hover:bg-secondary"
+            className="shrink-0"
           >
             Add
           </Button>

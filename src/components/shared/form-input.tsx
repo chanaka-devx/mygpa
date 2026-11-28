@@ -18,7 +18,7 @@ export function FormInput({ name, label, error, id, ...props }: FormInputProps) 
         </Label>
       )}
       <Input id={inputId} name={name} error={Boolean(error)} {...props} />
-      {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+      {error && <p className="mt-1 text-sm text-error">{error}</p>}
     </div>
   )
 }

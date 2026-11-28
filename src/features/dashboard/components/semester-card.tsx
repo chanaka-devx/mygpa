@@ -26,11 +26,11 @@ export function SemesterCard({
   const [moduleModalOpen, setModuleModalOpen] = useState(false)
 
   return (
-    <div className="mb-4 w-full">
-      <div className="mb-2 flex items-center space-x-2">
+    <div className="m3-card w-full p-5 sm:p-6">
+      <div className="mb-4 flex flex-wrap items-center space-x-2">
         <h1
-          className={`text-3xl font-semibold ${
-            semester.weight === 0 ? 'text-gray-400' : ''
+          className={`text-2xl font-semibold tracking-tight text-on-surface sm:text-3xl ${
+            semester.weight === 0 ? 'opacity-50' : ''
           }`}
         >
           {semester.name}
@@ -40,7 +40,7 @@ export function SemesterCard({
           type="button"
           onClick={onEdit}
           aria-label={`Edit ${semester.name}`}
-          className="rounded-md border p-1 text-2xl text-gray-600 hover:text-gray-400"
+          className="rounded-full border border-outline-variant p-2 text-on-surface-variant transition-colors hover:bg-surface-container-high hover:text-primary"
         >
           <SquarePen className="h-5 w-5" />
         </button>
@@ -48,7 +48,7 @@ export function SemesterCard({
           type="button"
           onClick={onRequestDelete}
           aria-label={`Delete ${semester.name}`}
-          className="rounded-md border p-1 text-2xl text-red-600 hover:text-red-400"
+          className="rounded-full border border-outline-variant p-2 text-error transition-colors hover:bg-surface-container-high"
         >
           <Trash2 className="h-5 w-5" />
         </button>
@@ -58,10 +58,16 @@ export function SemesterCard({
         <table className="w-full border-collapse text-left">
           <thead>
             <tr>
-              <th className="border-b-2 border-gray-300 p-2 sm:w-[60%]">Module Name</th>
-              <th className="w-[10%] border-b-2 border-gray-300 p-2">Credit</th>
-              <th className="border-b-2 border-gray-300 p-2">Grade</th>
-              <th className="w-[10%] border-b-2 border-gray-300 p-2" />
+              <th className="border-b-2 border-outline p-3 text-xs font-semibold uppercase tracking-wider text-on-surface-variant sm:w-[60%]">
+                Module Name
+              </th>
+              <th className="w-[10%] border-b-2 border-outline p-3 text-xs font-semibold uppercase tracking-wider text-on-surface-variant">
+                Credit
+              </th>
+              <th className="border-b-2 border-outline p-3 text-xs font-semibold uppercase tracking-wider text-on-surface-variant">
+                Grade
+              </th>
+              <th className="w-[10%] border-b-2 border-outline p-3" />
             </tr>
           </thead>
           <tbody>

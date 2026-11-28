@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import { Modal } from './modal'
 
 interface ConfirmDialogProps {
@@ -26,26 +27,21 @@ export function ConfirmDialog({
       title={title}
       description={description}
       showCloseButton={false}
-      className="max-w-sm rounded-lg p-6 shadow-xl"
+      className="max-w-sm p-6"
     >
       <div className="mt-6 flex justify-end gap-3">
-        <button
-          type="button"
-          onClick={onClose}
-          className="rounded-md bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-300"
-        >
+        <Button variant="secondary" onClick={onClose}>
           {cancelText}
-        </button>
-        <button
-          type="button"
+        </Button>
+        <Button
+          variant="destructive"
           onClick={() => {
             onConfirm()
             onClose()
           }}
-          className="rounded-md bg-red-600 px-4 py-2 text-white hover:bg-red-700"
         >
           {confirmText}
-        </button>
+        </Button>
       </div>
     </Modal>
   )

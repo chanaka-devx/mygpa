@@ -1,4 +1,4 @@
-# GPA Calculator
+# MCM GPA Tracker
 
 A Google-connected GPA tracker. Users sign in with Google, the app creates a
 `MyGPA` folder in their Google Drive and a `GPA Data` Google Sheet inside it,

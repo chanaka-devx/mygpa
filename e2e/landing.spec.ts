@@ -6,9 +6,11 @@ test('landing page renders and demo sign in opens the dashboard', async ({ page 
   await page.goto('/')
 
   await expect(
-    page.getByRole('heading', { level: 1, name: /GPA Calc - Free Online/ }),
+    page.getByRole('heading', { level: 1, name: /MCM GPA Tracker/ }),
   ).toBeVisible()
-  await expect(page.getByText('Trusted by 1015+ students worldwide')).toBeVisible()
+  await expect(
+    page.getByText('Sign in with Google to sync your GPA data to Drive.'),
+  ).toBeVisible()
 
   await page.getByRole('button', { name: 'Continue with Google' }).click()
   await expect(page).toHaveURL(/\/dashboard$/)
@@ -21,6 +23,6 @@ test('unauthenticated dashboard visits redirect to the landing page', async ({ p
 
   await expect(page).toHaveURL(/\/$/)
   await expect(
-    page.getByRole('heading', { level: 1, name: /GPA Calc - Free Online/ }),
+    page.getByRole('heading', { level: 1, name: /MCM GPA Tracker/ }),
   ).toBeVisible()
 })

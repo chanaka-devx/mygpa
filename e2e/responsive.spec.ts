@@ -7,7 +7,7 @@ test('mobile navigation opens and routes correctly', async ({ page }) => {
   await seedApp(page, { semesters: [buildSemester(0)] })
   await page.goto('/dashboard')
 
-  await expect(page.getByText('GPA Calculator').first()).toBeVisible()
+  await expect(page.getByText('MCM GPA').first()).toBeVisible()
   await page.getByRole('button', { name: 'Open menu' }).click()
 
   await expect(page.getByRole('link', { name: 'Home' })).toBeVisible()

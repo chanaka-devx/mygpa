@@ -10,17 +10,7 @@ import {
   YAxis,
 } from 'recharts'
 import type { SemesterWithStats } from '@/features/gpa/types'
-
-const BAR_COLORS = [
-  '#1f5492',
-  '#2563eb',
-  '#0ba1e7',
-  '#2cc0fc',
-  '#059669',
-  '#10b981',
-  '#d97706',
-  '#f59e0b',
-]
+import { CHART_COLORS, CREDIT_COLORS } from '../chart-theme'
 
 interface CreditsChartProps {
   semesters: SemesterWithStats[]
@@ -36,11 +26,11 @@ export function CreditsChart({ semesters }: CreditsChartProps) {
 
   if (data.length === 0) {
     return (
-      <div className="w-full rounded-2xl border border-gray-100 bg-white p-6 shadow-md">
+      <div className="m3-card w-full p-6">
         <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-primary">
           <BarChart3 className="text-xl" /> Credits per Semester
         </h2>
-        <p className="py-10 text-center text-gray-400">
+        <p className="py-10 text-center text-on-surface-variant">
           Add semesters to see credit breakdown
         </p>
       </div>
@@ -48,31 +38,36 @@ export function CreditsChart({ semesters }: CreditsChartProps) {
   }
 
   return (
-    <div className="w-full rounded-2xl border border-gray-100 bg-white p-6 shadow-md">
+    <div className="m3-card w-full p-6">
       <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-primary">
         <BarChart3 className="text-xl" /> Credits per Semester
       </h2>
       <ResponsiveContainer width="100%" height={320}>
         <BarChart data={data} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-          <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#6b7280' }} tickLine={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke={CHART_COLORS.grid} />
+          <XAxis
+            dataKey="name"
+            tick={{ fontSize: 12, fill: CHART_COLORS.axis }}
+            tickLine={false}
+          />
           <YAxis
-            tick={{ fontSize: 12, fill: '#6b7280' }}
+            tick={{ fontSize: 12, fill: CHART_COLORS.axis }}
             tickLine={false}
             allowDecimals={false}
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: '#fff',
-              borderRadius: '12px',
-              border: '1px solid #e5e7eb',
-              boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)',
+              backgroundColor: CHART_COLORS.surface,
+              borderRadius: '16px',
+              border: `1px solid ${CHART_COLORS.grid}`,
+              boxShadow: '0 2px 8px rgba(60, 64, 67, 0.12)',
+              color: CHART_COLORS.onSurface,
             }}
             formatter={(value) => [`${Number(value) || 0} credits`, 'Credits']}
           />
           <Bar dataKey="Credits" radius={[8, 8, 0, 0]} barSize={48}>
             {data.map((entry, index) => (
-              <Cell key={entry.name} fill={BAR_COLORS[index % BAR_COLORS.length]} />
+              <Cell key={entry.name} fill={CREDIT_COLORS[index % CREDIT_COLORS.length]} />
             ))}
           </Bar>
         </BarChart>

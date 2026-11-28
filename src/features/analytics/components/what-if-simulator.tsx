@@ -70,11 +70,11 @@ export function WhatIfSimulator({
   }
 
   return (
-    <div className="w-full rounded-2xl border border-gray-100 bg-white p-6 shadow-md">
+    <div className="m3-card w-full p-6">
       <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-primary">
         <Sparkles className="text-xl" /> What-If Simulator
       </h2>
-      <p className="mb-4 text-sm text-gray-500">
+      <p className="mb-4 text-sm text-on-surface-variant">
         Add hypothetical future semesters to see how your GPA would change.
       </p>
 
@@ -82,11 +82,11 @@ export function WhatIfSimulator({
         <div className="mb-4 overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b-2 border-gray-200">
-                <th className="pb-2 pr-3 font-medium text-gray-600">Semester</th>
-                <th className="pb-2 pr-3 font-medium text-gray-600">Credits</th>
-                <th className="pb-2 pr-3 font-medium text-gray-600">Expected GPA</th>
-                <th className="w-10 pb-2 font-medium text-gray-600" />
+              <tr className="border-b-2 border-outline-variant">
+                <th className="pb-2 pr-3 font-medium text-on-surface-variant">Semester</th>
+                <th className="pb-2 pr-3 font-medium text-on-surface-variant">Credits</th>
+                <th className="pb-2 pr-3 font-medium text-on-surface-variant">Expected GPA</th>
+                <th className="w-10 pb-2 font-medium text-on-surface-variant" />
               </tr>
             </thead>
             <tbody>
@@ -99,7 +99,7 @@ export function WhatIfSimulator({
                       onChange={(event) =>
                         updateHypothetical(item.id, 'name', event.target.value)
                       }
-                      className="w-full rounded-lg border border-gray-300 px-3 py-1.5 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+                      className="w-full rounded-t border-0 border-b-2 border-outline bg-surface-container px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none focus:ring-0"
                     />
                   </td>
                   <td className="py-2 pr-3">
@@ -111,7 +111,7 @@ export function WhatIfSimulator({
                       onChange={(event) =>
                         updateHypothetical(item.id, 'credits', event.target.value)
                       }
-                      className="w-24 rounded-lg border border-gray-300 px-3 py-1.5 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+                      className="w-24 rounded-t border-0 border-b-2 border-outline bg-surface-container px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none focus:ring-0"
                     />
                   </td>
                   <td className="py-2 pr-3">
@@ -124,14 +124,14 @@ export function WhatIfSimulator({
                       onChange={(event) =>
                         updateHypothetical(item.id, 'gpa', event.target.value)
                       }
-                      className="w-24 rounded-lg border border-gray-300 px-3 py-1.5 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+                      className="w-24 rounded-t border-0 border-b-2 border-outline bg-surface-container px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none focus:ring-0"
                     />
                   </td>
                   <td className="py-2">
                     <button
                       type="button"
                       onClick={() => removeHypothetical(item.id)}
-                      className="rounded-lg p-1.5 text-red-500 transition-colors hover:bg-red-50 hover:text-red-700"
+                      className="rounded-full p-2 text-error transition-colors hover:bg-surface-container-high"
                       title="Remove"
                     >
                       ✕
@@ -147,16 +147,16 @@ export function WhatIfSimulator({
       <button
         type="button"
         onClick={addHypothetical}
-        className="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+        className="cursor-pointer rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-on-primary transition-all hover:bg-primary-hover hover:shadow-md"
       >
         + Add Hypothetical Semester
       </button>
 
       {projection && (
-        <div className="mt-4 rounded-xl border border-indigo-200 bg-indigo-50 p-4">
+        <div className="mt-5 rounded-3xl bg-primary-container/60 p-5">
           <div className="flex flex-wrap gap-6">
             <div>
-              <p className="text-xs uppercase tracking-wide text-gray-500">
+              <p className="text-xs uppercase tracking-wide text-on-surface-variant">
                 Projected GPA
               </p>
               <p className="text-2xl font-bold text-primary">
@@ -164,11 +164,11 @@ export function WhatIfSimulator({
               </p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide text-gray-500">Change</p>
+              <p className="text-xs uppercase tracking-wide text-on-surface-variant">Change</p>
               <p
                 className={[
                   'text-2xl font-bold',
-                  projection.gpaDifference >= 0 ? 'text-green-600' : 'text-red-600',
+                  projection.gpaDifference >= 0 ? 'text-success' : 'text-error',
                 ].join(' ')}
               >
                 {projection.gpaDifference >= 0 ? '+' : ''}
@@ -176,7 +176,7 @@ export function WhatIfSimulator({
               </p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide text-gray-500">
+              <p className="text-xs uppercase tracking-wide text-on-surface-variant">
                 Total Credits
               </p>
               <p className="text-2xl font-bold text-primary">

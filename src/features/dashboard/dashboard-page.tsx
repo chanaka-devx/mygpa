@@ -91,29 +91,33 @@ export function DashboardPage() {
   }
 
   return (
-    <div className="w-full p-4">
+    <div className="mx-auto w-full max-w-7xl space-y-6 p-4 sm:p-6">
       {loading && <Loader />}
 
       {!hasSeenNotification && (
         <NewFeatureBanner onDismiss={() => dismissNotification()} />
       )}
 
-      <div className="mb-4 flex flex-col justify-between gap-4 md:flex-row md:items-center">
+      <div className="m3-card flex flex-col justify-between gap-6 p-5 sm:p-6 md:flex-row md:items-center">
         <div className="flex flex-wrap items-baseline gap-6 sm:gap-8">
           <div className="flex items-baseline space-x-3 sm:space-x-4">
-            <h1 className="text-xl font-normal text-gray-800 sm:text-3xl">Current GPA :</h1>
+            <h1 className="text-xl font-normal text-on-surface-variant sm:text-3xl">
+              Current GPA :
+            </h1>
             <div className="flex items-baseline gap-2">
-              <h2 className="text-2xl font-bold tracking-tight text-primary sm:text-4xl">
+              <h2 className="text-2xl font-semibold tracking-tight text-primary sm:text-4xl">
                 {Number.isFinite(currentGpa) ? currentGpa.toFixed(4) : '0.0000'}
               </h2>
-              <span className="rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 text-xs font-medium text-primary">
+              <span className="rounded-full bg-primary-container px-3 py-1 text-xs font-medium text-on-primary-container">
                 {gpaMethod === 'credit-weighted' ? 'Weighted Module CGPA' : 'Weighted SGPA'}
               </span>
             </div>
           </div>
           <div className="flex items-baseline space-x-3 sm:space-x-4">
-            <h1 className="text-xl font-normal text-gray-800 sm:text-3xl">Total Credits :</h1>
-            <h2 className="text-2xl font-bold tracking-tight text-primary sm:text-4xl">
+            <h1 className="text-xl font-normal text-on-surface-variant sm:text-3xl">
+              Total Credits :
+            </h1>
+            <h2 className="text-2xl font-semibold tracking-tight text-primary sm:text-4xl">
               {totalCredits !== 0 ? totalCredits : 0}
             </h2>
           </div>
@@ -127,7 +131,7 @@ export function DashboardPage() {
         </div>
       </div>
 
-      <div className="my-2 mb-4 h-1 w-full bg-primary" />
+      <div className="h-px w-full bg-outline-variant" />
 
       {enriched.map((semester) => (
         <SemesterCard
@@ -143,9 +147,9 @@ export function DashboardPage() {
         />
       ))}
 
-      {enriched.length !== 0 && <div className="h-1 w-full bg-primary" />}
+      {enriched.length !== 0 && <div className="h-px w-full bg-outline-variant" />}
 
-      <div className="mt-4 flex w-full items-center justify-center space-x-4">
+      <div className="flex w-full items-center justify-center space-x-4">
         <Button
           onClick={() =>
             setSemesterModal({ open: true, mode: 'add', semester: null })

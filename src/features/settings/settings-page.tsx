@@ -95,51 +95,61 @@ export function SettingsPage() {
   }
 
   return (
-    <div className="w-full p-4">
+    <div className="mx-auto w-full max-w-5xl p-4 sm:p-6">
       {(loading || saving) && <Loader />}
 
-      <h1 className="text-xl font-semibold text-primary">Grades</h1>
-      <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-4">
-        {GRADE_INPUTS.map(({ name, label }) => (
-          <FormInput
-            key={name}
-            name={name}
-            label={label}
-            value={points[label] ?? 0}
-            onChange={(event) => handlePointChange(label, event.target.value)}
-            error={errors[label]}
-            type="number"
-          />
-        ))}
-      </div>
-
-      <h1 className="mt-6 text-xl font-semibold text-primary">Semester Weights</h1>
-      <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-4">
-        {semesterWeights.length > 0 ? (
-          semesterWeights.map((semester) => (
-            <div key={semester._id}>
-              <div className="mb-1 text-sm font-medium text-gray-600">
-                {semester.name}
-              </div>
+      <div className="m3-card space-y-8 p-6">
+        <section>
+          <h1 className="text-xl font-semibold tracking-tight text-on-surface">Grades</h1>
+          <div className="mt-5 grid grid-cols-2 gap-5 md:grid-cols-4">
+            {GRADE_INPUTS.map(({ name, label }) => (
               <FormInput
-                name={`weight-${semester._id}`}
-                label=""
-                value={weightInputs[semester._id] ?? 0}
-                onChange={(event) =>
-                  handleWeightChange(semester._id, event.target.value)
-                }
+                key={name}
+                name={name}
+                label={label}
+                value={points[label] ?? 0}
+                onChange={(event) => handlePointChange(label, event.target.value)}
+                error={errors[label]}
                 type="number"
               />
-            </div>
-          ))
-        ) : (
-          <div className="col-span-4 text-gray-500">No semester data available</div>
-        )}
-      </div>
+            ))}
+          </div>
+        </section>
 
-      <Button onClick={handleSave} disabled={saving}>
-        Save Changes
-      </Button>
+        <section>
+          <h1 className="text-xl font-semibold tracking-tight text-on-surface">
+            Semester Weights
+          </h1>
+          <div className="mt-5 grid grid-cols-2 gap-5 md:grid-cols-4">
+            {semesterWeights.length > 0 ? (
+              semesterWeights.map((semester) => (
+                <div key={semester._id}>
+                  <div className="mb-2 text-sm font-medium text-on-surface-variant">
+                    {semester.name}
+                  </div>
+                  <FormInput
+                    name={`weight-${semester._id}`}
+                    label=""
+                    value={weightInputs[semester._id] ?? 0}
+                    onChange={(event) =>
+                      handleWeightChange(semester._id, event.target.value)
+                    }
+                    type="number"
+                  />
+                </div>
+              ))
+            ) : (
+              <div className="col-span-4 text-on-surface-variant">
+                No semester data available
+              </div>
+            )}
+          </div>
+        </section>
+
+        <Button onClick={handleSave} disabled={saving}>
+          Save Changes
+        </Button>
+      </div>
     </div>
   )
 }

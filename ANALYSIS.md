@@ -1,13 +1,15 @@
 # Analysis and Rebuild Notes
 
-## Reference
+## Current Product
 
-- Original target: `https://gpa.sarislabs.com/dashboard`
-- Reference extraction artifacts remain in `_analysis/`.
-- The UI was rebuilt for visual fidelity first, then extended from LocalStorage
-  into a Google-backed application.
+MCM GPA Tracker is a Google-connected GPA tracker. Users sign in with Google;
+the app creates a `MyGPA` folder in Drive and a `GPA Data` Sheet inside it, then
+syncs semesters, modules, settings, and feedback to that Sheet.
 
-## Current Architecture
+The UI uses a Google Material Design 3 style: tonal surfaces, pill-shaped
+buttons, outlined text fields, elevated cards, and a circular progress loader.
+
+## Architecture
 
 One Vercel project serves both parts:
 
@@ -23,7 +25,7 @@ Frontend:
 - Zustand holds in-memory GPA/auth state.
 - LocalStorage is retained as a cache and migration source.
 - `src/features/cloud/cloud-sync.tsx` performs cloud hydration and writes.
-- Cloud status is shown in the sidebar and mobile navigation.
+- `src/features/cloud/cloud-status.tsx` shows Drive sync state.
 
 Backend:
 
@@ -81,28 +83,19 @@ Spreadsheet tabs and columns:
 - A `pagehide` listener sends a final `sendBeacon` request.
 - The route is protected by the session cookie; tokens never reach the browser.
 
-## Visual Fidelity Details Preserved
+## UI Notes
 
-- Primary `#2b2b41`, secondary `#193636`, Geist font, sidebar/header layout.
-- Dashboard GPA/credit headings and method badge.
-- New-feature banner and semester/module CRUD.
-- Analytics title “Analytics & Progress”, charts, target calculator, and what-if
-  simulator.
-- Settings, help, feedback, and responsive navigation.
+- Branding is MCM throughout; the old logo was replaced by `public/mcm-logo.svg`.
+- The landing page is intentionally minimal: logo, product name, one sentence,
+  and Google sign-in.
+- The loading animation is a Material 3 circular progress indicator.
+- Navigation uses M3 drawer/nav-item patterns with tonal active states.
+- Cards use 28px corners, outline variants, and low elevation.
 
 ## Preserved Reference Quirk
 
 Preset modules use lowercase `"c"`, so the uppercase grade selector appears
 blank while calculations still treat it as C/2.0.
-
-## Deliberate Deviations
-
-- Mock auth was replaced with real Google OAuth.
-- LocalStorage is no longer the source of truth, only a cache/migration source.
-- Google Drive/Sheets is the user-facing data store.
-- A small Postgres-compatible database stores encrypted session/token records.
-- Adding a module still persists immediately.
-- Preset module IDs are regenerated when added.
 
 ## Verification
 

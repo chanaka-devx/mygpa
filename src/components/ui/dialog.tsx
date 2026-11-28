@@ -14,7 +14,7 @@ export const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      'dialog-overlay fixed inset-0 z-50 bg-black/40',
+      'dialog-overlay fixed inset-0 z-50 bg-black/40 backdrop-blur-sm',
       className,
     )}
     {...props}
@@ -31,7 +31,7 @@ export const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'dialog-content fixed left-1/2 top-1/2 z-50 max-h-[90vh] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl bg-white p-6 shadow-lg focus:outline-none',
+        'dialog-content fixed left-1/2 top-1/2 z-50 max-h-[90vh] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-[28px] bg-surface p-6 text-on-surface shadow-2xl focus:outline-none',
         className,
       )}
       {...props}
@@ -60,7 +60,7 @@ export const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn('text-sm text-gray-600', className)}
+    className={cn('text-sm text-on-surface-variant', className)}
     {...props}
   />
 ))
@@ -68,7 +68,10 @@ DialogDescription.displayName = 'DialogDescription'
 
 export const DialogCloseButton = ({ className }: { className?: string }) => (
   <DialogPrimitive.Close
-    className={cn('absolute right-3 top-3 text-gray-500 hover:text-gray-700', className)}
+    className={cn(
+      'absolute right-4 top-4 rounded-full p-2 text-on-surface-variant transition-colors hover:bg-surface-container-high hover:text-on-surface',
+      className,
+    )}
     aria-label="Close"
   >
     <X className="h-5 w-5" />

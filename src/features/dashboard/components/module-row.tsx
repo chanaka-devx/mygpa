@@ -83,7 +83,7 @@ export function ModuleRow({ module, onUpdate, onDelete }: ModuleRowProps) {
 
   return (
     <>
-      <tr className={`h-8 items-center hover:bg-gray-100 ${dirty ? 'bg-white' : ''}`}>
+      <tr className={`h-10 items-center hover:bg-surface-container/60 ${dirty ? 'bg-surface' : ''}`}>
         <td className="p-2">
           <FormInput
             id={`module-name-${module.id}`}
@@ -126,9 +126,9 @@ export function ModuleRow({ module, onUpdate, onDelete }: ModuleRowProps) {
                 setForm((current) => ({ ...current, grade: event.target.value }))
               }
               className={[
-                'w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500',
-                errors.grade ? 'border-red-500' : 'border-gray-300',
-                isNGPA(module.grade) ? 'bg-gray-300' : '',
+                'w-full rounded-t border-0 border-b-2 bg-surface-container px-3 py-2.5 text-on-surface focus:outline-none focus:ring-0',
+                errors.grade ? 'border-error' : 'border-outline',
+                isNGPA(module.grade) ? 'opacity-60' : '',
               ].join(' ')}
             >
               <option value="">Select </option>
@@ -138,7 +138,7 @@ export function ModuleRow({ module, onUpdate, onDelete }: ModuleRowProps) {
                 </option>
               ))}
             </select>
-            {errors.grade && <p className="mt-1 text-sm text-red-500">{errors.grade}</p>}
+            {errors.grade && <p className="mt-1 text-sm text-error">{errors.grade}</p>}
           </div>
         </td>
         <td className="flex items-center p-2">
@@ -148,7 +148,7 @@ export function ModuleRow({ module, onUpdate, onDelete }: ModuleRowProps) {
                 type="button"
                 onClick={handleSave}
                 aria-label="Save module"
-                className="rounded-xl bg-green-600 p-3 text-white hover:bg-green-400"
+                className="rounded-full bg-success-container p-2.5 text-on-success-container transition-colors hover:bg-secondary-container"
               >
                 <Check className="h-4 w-4" />
               </button>
@@ -156,7 +156,7 @@ export function ModuleRow({ module, onUpdate, onDelete }: ModuleRowProps) {
                 type="button"
                 onClick={handleCancel}
                 aria-label="Cancel changes"
-                className="rounded-xl bg-red-600 p-3 text-white hover:bg-red-400"
+                className="rounded-full bg-error-container p-2.5 text-on-error-container transition-colors hover:bg-surface-container-high"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -166,7 +166,7 @@ export function ModuleRow({ module, onUpdate, onDelete }: ModuleRowProps) {
               type="button"
               onClick={() => setConfirmOpen(true)}
               aria-label="Delete module"
-              className="rounded-xl bg-red-600 p-3 text-white hover:bg-red-400"
+              className="rounded-full bg-error-container p-2.5 text-on-error-container transition-colors hover:bg-surface-container-high"
             >
               <Trash2 className="h-4 w-4" />
             </button>

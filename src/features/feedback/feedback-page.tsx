@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { toast } from 'react-toastify'
+import { Button } from '@/components/ui/button'
 import { useGpaStore } from '@/features/gpa/gpa-store'
 
 export function FeedbackPage() {
@@ -24,33 +25,34 @@ export function FeedbackPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl p-6">
-      <h1 className="mb-6 text-2xl font-bold">Feedback</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="description" className="mb-2 block text-sm font-medium">
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
-            rows={6}
-            placeholder="Please share your feedback, suggestions, or report any issues..."
-            className="mt-1 block w-full rounded-md border border-gray-300 p-3 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
-        <div className="flex justify-end">
-          <button
-            type="submit"
-            disabled={submitting}
-            className="rounded-md bg-blue-500 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-600 disabled:opacity-60"
-          >
-            Submit Feedback
-          </button>
-        </div>
-      </form>
+    <div className="mx-auto w-full max-w-3xl p-4 sm:p-6">
+      <div className="m3-card p-6">
+        <h1 className="text-2xl font-semibold tracking-tight text-on-surface">Feedback</h1>
+        <p className="mt-2 text-sm text-on-surface-variant">
+          Share suggestions or report an issue. Your feedback is saved to your Google Sheet.
+        </p>
+        <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+          <div>
+            <label htmlFor="description" className="mb-2 block text-sm font-medium text-on-surface">
+              Description
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+              rows={6}
+              placeholder="Please share your feedback, suggestions, or report any issues..."
+              className="mt-1 block w-full rounded-t border-0 border-b-2 border-outline bg-surface-container p-4 text-on-surface placeholder:text-on-surface-variant focus:border-primary focus:outline-none focus:ring-0"
+            />
+          </div>
+          <div className="flex justify-end">
+            <Button type="submit" disabled={submitting}>
+              Submit Feedback
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }

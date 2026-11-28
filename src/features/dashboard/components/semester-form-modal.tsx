@@ -79,7 +79,7 @@ export function SemesterFormModal({
         <button
           type="button"
           onClick={handleSubmit}
-          className="mt-4 w-full rounded bg-primary p-2 text-white hover:bg-primary/80"
+          className="mt-5 w-full cursor-pointer rounded-full bg-primary px-6 py-3 font-medium text-on-primary transition-all hover:bg-primary-hover hover:shadow-md"
         >
           Submit
         </button>

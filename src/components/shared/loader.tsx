@@ -1,19 +1,25 @@
-const Box = ({ className }: { className: string }) => (
-  <div className={`box ${className}`}>
-    <div className="side-left" />
-    <div className="side-right" />
-    <div className="side-top" />
-  </div>
-)
+export function ProgressSpinner({ className = 'h-5 w-5' }: { className?: string }) {
+  return (
+    <svg className={`m3-progress ${className}`} viewBox="0 0 48 48" role="status">
+      <circle
+        cx="24"
+        cy="24"
+        r="20"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
 
 export function Loader() {
   return (
-    <div className="fixed bottom-0 left-0 right-0 top-0 z-[60] flex h-full min-h-screen w-full items-center justify-center bg-gray-100/50">
-      <div className="loader">
-        <Box className="box-1" />
-        <Box className="box-2" />
-        <Box className="box-3" />
-        <Box className="box-4" />
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-surface/80 backdrop-blur-sm">
+      <div className="flex flex-col items-center gap-4 text-primary">
+        <ProgressSpinner className="h-12 w-12" />
+        <p className="text-sm font-medium text-on-surface-variant">Loading…</p>
       </div>
     </div>
   )

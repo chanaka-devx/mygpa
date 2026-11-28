@@ -10,11 +10,11 @@ const STATUS_LABELS: Record<SyncStatus, string> = {
 }
 
 const STATUS_COLORS: Record<SyncStatus, string> = {
-  idle: 'bg-gray-400',
-  syncing: 'bg-amber-400',
-  saving: 'bg-amber-400',
-  synced: 'bg-emerald-400',
-  error: 'bg-red-400',
+  idle: 'bg-outline',
+  syncing: 'bg-warning',
+  saving: 'bg-warning',
+  synced: 'bg-success',
+  error: 'bg-error',
 }
 
 export function CloudStatus({ compact = false }: { compact?: boolean }) {
@@ -23,25 +23,35 @@ export function CloudStatus({ compact = false }: { compact?: boolean }) {
   const error = useCloudStore((state) => state.error)
 
   return (
-    <div className={compact ? 'my-3 text-white/80' : 'mx-3 mb-4 rounded-xl bg-white/[0.07] p-3 text-white'}>
+    <div
+      className={
+        compact
+          ? 'my-3 rounded-2xl bg-surface-container px-4 py-3 text-on-surface-variant'
+          : 'mx-3 mb-4 rounded-3xl bg-surface p-4 text-on-surface shadow-sm'
+      }
+    >
       <div className="flex items-center justify-between gap-2">
-        <span className={compact ? 'text-xs font-medium' : 'text-[11px] uppercase tracking-widest text-white/40'}>
+        <span
+          className={
+            compact
+              ? 'text-xs font-medium'
+              : 'text-[11px] font-semibold uppercase tracking-widest text-on-surface-variant'
+          }
+        >
           Google Drive
         </span>
-        <span className="flex items-center gap-1.5 text-xs">
-          <span className={`h-1.5 w-1.5 rounded-full ${STATUS_COLORS[status]}`} />
+        <span className="flex items-center gap-2 text-xs font-medium">
+          <span className={`h-2 w-2 rounded-full ${STATUS_COLORS[status]}`} />
           {STATUS_LABELS[status]}
         </span>
       </div>
-      {!compact && error && <p className="mt-2 text-[11px] text-red-300">{error}</p>}
+      {!compact && error && <p className="mt-2 text-[11px] text-error">{error}</p>}
       {spreadsheetUrl && (
         <a
           href={spreadsheetUrl}
           target="_blank"
           rel="noreferrer"
-          className={`mt-2 inline-flex items-center gap-1 text-xs text-white/70 hover:text-white ${
-            compact ? '' : 'underline-offset-2 hover:underline'
-          }`}
+          className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
         >
           <ExternalLink className="h-3 w-3" />
           Open Google Sheet

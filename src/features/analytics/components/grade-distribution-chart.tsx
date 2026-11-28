@@ -9,20 +9,7 @@ import {
 } from 'recharts'
 import { isNGPA } from '@/features/gpa/calculations'
 import type { SemesterWithStats } from '@/features/gpa/types'
-
-const GRADE_COLORS: Record<string, string> = {
-  'A+': '#059669',
-  A: '#10b981',
-  'A-': '#34d399',
-  'B+': '#2563eb',
-  B: '#3b82f6',
-  'B-': '#60a5fa',
-  'C+': '#d97706',
-  C: '#f59e0b',
-  'C-': '#fbbf24',
-  D: '#ef4444',
-  F: '#991b1b',
-}
+import { CHART_COLORS, GRADE_COLORS } from '../chart-theme'
 
 const GRADE_ORDER = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D', 'F']
 
@@ -43,17 +30,17 @@ export function GradeDistributionChart({ semesters }: GradeDistributionChartProp
   const data = GRADE_ORDER.filter((grade) => (counts[grade] || 0) > 0).map((grade) => ({
     name: grade,
     value: counts[grade],
-    color: GRADE_COLORS[grade] || '#9ca3af',
+    color: GRADE_COLORS[grade] || CHART_COLORS.muted,
   }))
   const total = data.reduce((sum, item) => sum + item.value, 0)
 
   if (data.length === 0) {
     return (
-      <div className="w-full rounded-2xl border border-gray-100 bg-white p-6 shadow-md">
+      <div className="m3-card w-full p-6">
         <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-primary">
           <PieChartIcon className="text-xl" /> Grade Distribution
         </h2>
-        <p className="py-10 text-center text-gray-400">
+        <p className="py-10 text-center text-on-surface-variant">
           Add modules with grades to see your distribution
         </p>
       </div>
@@ -61,7 +48,7 @@ export function GradeDistributionChart({ semesters }: GradeDistributionChartProp
   }
 
   return (
-    <div className="w-full rounded-2xl border border-gray-100 bg-white p-6 shadow-md">
+    <div className="m3-card w-full p-6">
       <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-primary">
         <PieChartIcon className="text-xl" /> Grade Distribution
       </h2>
@@ -86,10 +73,11 @@ export function GradeDistributionChart({ semesters }: GradeDistributionChartProp
           </Pie>
           <Tooltip
             contentStyle={{
-              backgroundColor: '#fff',
-              borderRadius: '12px',
-              border: '1px solid #e5e7eb',
-              boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)',
+              backgroundColor: CHART_COLORS.surface,
+              borderRadius: '16px',
+              border: `1px solid ${CHART_COLORS.grid}`,
+              boxShadow: '0 2px 8px rgba(60, 64, 67, 0.12)',
+              color: CHART_COLORS.onSurface,
             }}
             formatter={(value, name) => [
               `${Number(value) || 0} module${Number(value) !== 1 ? 's' : ''} (${(((Number(value) || 0) / total) * 100).toFixed(1)}%)`,
@@ -98,7 +86,9 @@ export function GradeDistributionChart({ semesters }: GradeDistributionChartProp
           />
           <Legend
             wrapperStyle={{ paddingTop: '12px' }}
-            formatter={(value) => <span className="text-sm text-gray-600">{value}</span>}
+            formatter={(value) => (
+              <span className="text-sm text-on-surface-variant">{value}</span>
+            )}
           />
         </PieChart>
       </ResponsiveContainer>
